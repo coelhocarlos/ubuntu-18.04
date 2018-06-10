@@ -23,7 +23,6 @@ Install_Apache() {
     echo " -------------- Installing Apache -------------- "
     
     cd $DOWNDIR
-    sudo apt update || local ERROR=1
     sudo apt install apache2 || local ERROR=1
     #sudo ufw app list 
     sudo ufw allow 'Apache' || local ERROR=1
@@ -58,7 +57,7 @@ Install_php() {
  Install_Mysql() {
     echo " -------------- Installing Mysql -------------- "
     cd $DOWNDIR
-    sudo apt update || local ERROR=1
+    
     sudo apt install mysql-server || local ERROR=1
     sudo apt install mysql-client || local ERROR=1
     sudo mysql_secure_installation
@@ -77,7 +76,7 @@ install_samba() {
     echo " -------------- Installing samba -------------- "
     
     cd $DOWNDIR
-    sudo apt install tasksel 
+    
     sudo tasksel install samba-server  || local ERROR=1
     sudo cp /etc/samba/smb.conf /etc/samba/smb.conf_backup  || local ERROR=1
     sudo bash -c 'grep -v -E "^#|^;" /etc/samba/smb.conf_backup | grep . > /etc/samba/smb.conf'  || local ERROR=1
@@ -220,7 +219,7 @@ Install_cron() {
 Install_utorrent () {
     echo " -------------- Installing Utorrent -------------- "
     cd $DOWNDIR
-    sudo apt-get update || local ERROR=1
+    
     sudo apt-get install libssl1.0.0 libssl-dev || local ERROR=1
     sudo wget http://download-new.utorrent.com/endpoint/utserver/os/linux-x64-ubuntu-13-04/track/beta/ -O utserver.tar.gz || local ERROR=1
     sudo tar -zxvf utserver.tar.gz -C /opt/ || local ERROR=1
