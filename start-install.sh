@@ -49,12 +49,16 @@ dots "Install Php 7"
 Install_php >>$LOG 2>1
 dots "" $?
 
-dots "Install Maria-DB"
+dots "Install mariaDB"
 Install_MariaDB >>$LOG 2>1
 dots "" $?
 
 dots "Install Mysql-Server"
 Install_Mysql >>$LOG 2>1
+dots "" $?
+
+dots "Install SSL CERT"
+Install_SSL >>$LOG 2>1
 dots "" $?
 
 dots "Install PhpMyAdmin"
