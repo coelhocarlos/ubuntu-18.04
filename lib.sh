@@ -7,7 +7,7 @@ install_Webmin() {
     echo " -------------- Installing Webmin -------------- "
     cd $DOWNDIR
     sudo apt install tasksel wget || local ERROR=1
-    sudo tasksel install lamp-server || local ERROR=1
+    #sudo tasksel install lamp-server || local ERROR=1
     sudo add-apt-repository "deb http://download.webmin.com/download/repository sarge contrib" || local ERROR=1
     sudp wget -qO- http://www.webmin.com/jcameron-key.asc | sudo apt-key add || local ERROR=1
     sudo apt update || local ERROR=1
