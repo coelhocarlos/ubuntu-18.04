@@ -17,7 +17,8 @@ tabs 16
 export global cpu=`cat "/proc/cpuinfo" | grep "processor"|wc -l`
 export global TMPDIR=$HOME/tmp
 mkdir -p $HOME/tmp
-export global DOWNDIR=/root/ffmpeginstall
+mkdir -p ~/Downloads
+export global DOWNDIR=/root/Downloads
 mkdir -p $DOWNDIR
 export global DESTDIR=""
 export global ARCH=$(arch)
@@ -36,15 +37,15 @@ dots "Update Distro"
 apt_update >>$LOG 2>1
 dots "" $?
 
+dots "Install Apache"
+Install_Apache >>$LOG 2>1
+dots "" $?
+
 dots "Installing Webmin"
 install_Webmin >>$LOG 2>1
 dots "" $?
 # on port error /etc/init.d/webmin restart
 # editing /etc/webmin/miniserv.conf port 10000 to 10222
-
-dots "Install Apache"
-Install_Apache >>$LOG 2>1
-dots "" $?
 
 dots "Install Php 7"
 Install_php >>$LOG 2>1
