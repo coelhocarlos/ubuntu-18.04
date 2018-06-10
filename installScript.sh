@@ -1,5 +1,4 @@
 #!/bin/bash
- 
 # Declare variable choice and assign value 4
 choice=4
 # Print to stdout
@@ -10,8 +9,7 @@ choice=4
  echo -n "Please choose a word [1,2 or 3]? "
 # Loop while the variable choice is equal 4
 # bash while loop
-while [ $choice -eq 4 ]; do
- 
+while [ $choice -eq 4 ]; do 
 # read user input
 read choice
 # bash nested if/else
