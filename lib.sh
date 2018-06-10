@@ -23,7 +23,7 @@ Install_Apache() {
     echo " -------------- Installing Apache -------------- "
     
     cd $DOWNDIR
-    sudo apt install apache2 || local ERROR=1
+    sudo apt-get -y install apache2 || local ERROR=1
     #sudo ufw app list 
     sudo ufw allow 'Apache' || local ERROR=1
     sudo mkdir -p /var/www/server || local ERROR=1
@@ -48,23 +48,43 @@ Install_php() {
     sudo apt-get install python-software-properties || local ERROR=1
     sudo add-apt-repository ppa:ondrej/php || local ERROR=1
     sudo apt-get update || local ERROR=1
-    sudo apt-get install -y php7.2 || local ERROR=1
+    sudo aapt-get -y install php7.2 libapache2-mod-php7.2 || local ERROR=1
     sudo apt-get install php7.2-mysql php7.2-curl php7.2-json php7.2-cgi php7.2-xsl || local ERROR=1
+    sudo apt-get -y install php7.2-mysql php7.2-curl php7.2-gd php7.2-intl php-pear php-imagick php7.2-imap php-memcache  php7.2-pspell php7.2-recode php7.2-sqlite3 php7.2-tidy php7.2-xmlrpc php7.2-xsl php7.2-mbstring php-gettext || local ERROR=1
+    sudo systemctl restart apache2
+    sudo apt-get -y install php7.2-opcache php-apcu
+    sudo systemctl restart apache2
+    sudo a2enmod ssl
+    sudo a2ensite default-ssl
     sudo systemctl restart apache2
     return $ERROR
+}
+Install_SSL(){
+    echo " -------------- Installing SSL -------------- " 
+    cd $DOWNDIR
+    sudo apt-get -y install python3-certbot-apache
+    #nano /etc/apache2/sites-available/000-default.conf
+    #ServerName example.com
+    #certbot --apache -d example.com
+    # Let's encrypt Auto Renewal
+    #/etc/cron.d/certbot
+    #0 */12 * * * root test -x /usr/bin/certbot -a \! -d /run/systemd/system && perl -e 'sleep int(rand(43200))' && certbot -q renew
 }
 
  Install_Mysql() {
     echo " -------------- Installing Mysql -------------- "
     cd $DOWNDIR
-    
-    sudo apt install mysql-server || local ERROR=1
-    sudo apt install mysql-client || local ERROR=1
+    apt-get -y install mysql-server mysql-client || local ERROR=1
     sudo mysql_secure_installation
     sudo systemctl restart mysql.service || local ERROR=1
     return $ERROR
 }
-
+Install_mariaDB(){
+    echo " -------------- Installing Maria Db -------------- "
+    cd $DOWNDIR
+    apt-get -y install mariadb-server mariadb-client
+    mysql_secure_installation
+}
 Install_PhpMyAdmin() {
     echo " -------------- Installing PHP Myadmin -------------- "
     cd $DOWNDIR
