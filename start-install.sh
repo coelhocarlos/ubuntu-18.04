@@ -37,53 +37,53 @@ dots "Update Distro"
 apt_update >>$LOG 2>1
 dots "" $?
 
-dots "Install Mysql-Server"
+dots "Mysql-Server"
 Install_Mysql >>$LOG 2>1
 dots "" $?
 
-dots "Install Apache"
+dots "Apache"
 Install_Apache >>$LOG 2>1
 dots "" $?
 
-dots "Install Php 7"
+dots "Php 7"
 Install_php >>$LOG 2>1
 dots "" $?
 
-dots "Install mariaDB"
+dots "Maria DB"
 Install_MariaDB >>$LOG 2>1
 dots "" $?
 
-dots "Install Mysql-Server"
+dots "Mysql-Server"
 Install_Mysql >>$LOG 2>1
 dots "" $?
 
-dots "Install SSL CERT"
+dots "SL CERT"
 Install_SSL >>$LOG 2>1
 dots "" $?
 
-dots "Install PhpMyAdmin"
+dots "PhpMyAdmin"
 Install_PhpMyAdmin >>$LOG 2>1
 dots "" $?
 
-dots "Installing Webmin"
+dots "Webmin"
 install_Webmin >>$LOG 2>1
 dots "" $?
 # on port error /etc/init.d/webmin restart
 # editing /etc/webmin/miniserv.conf port 10000 to 10222
 
-dots "Install Samba"
+dots "Samba"
 Install_Samba >>$LOG 2>1
 dots "" $?
 
-dots "Add FireWall Rules"
+dots "FireWallRules"
 Install_Firewall >>$LOG 2>1
 dots "" $?
 
-dots "Installing Git"
+dots "Git"
 install_git >>$LOG 2>1
 dots "" $?
 
-dots "Add Cron Scripts"
+dots "Cron Scripts"
 Install_cron >>$LOG 2>1
 dots "" $?
 
@@ -97,27 +97,27 @@ dots "Install Utorrent"
 Install_utorrent >>$LOG 2>1
 dots "" $?
 
-dots "Install Emby"
+dots "Emby"
 Install_Emby >>$LOG 2>1
 dots "" $?
 
-dots "Install NTFS 3g"
+dots "NTFS 3g"
 Install_ntfs >>$LOG 2>1
 dots "" $?
 
-dots "Instaling Drivers Impressora"
+dots "Drivers Impressora"
 Install_Impressora >>$LOG 2>1
 dots "" $?
 
-dots "Install Pxe Libs"
+dots "Pxe Libs"
 Install_pxe_lib >>$LOG 2>1
 dots "" $?
 
-dots "Install Mega Tools Backup"
+dots "Mega Tools Backup"
 Install_mega >>$LOG 2>1
 dots "" $?
 
-dots "Install TestDisc"
+dots "TestDisc"
 Install_TestDisc >>$LOG 2>1
 dots "" $?
 
@@ -127,7 +127,7 @@ echo -e "\n#### Finish Install MEDIA #### \n"
 #Init Install Tools NetWork
 echo -e "\n#### Install Tools NetWork #### \n"
 
-dots "Install Glances"
+dots "Glances"
 Install_glances >>$LOG 2>1
 dots "" $?
 
