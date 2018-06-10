@@ -6,6 +6,7 @@ source ./lib.sh
 #source ./bin.sh
 source ./functions.sh
 
+
 export global binonly=false
 
 #Parse Args
