@@ -37,18 +37,20 @@ dots "Update Distro"
 apt_update >>$LOG 2>1
 dots "" $?
 
+dots "Install Mysql-Server"
+Install_Mysql >>$LOG 2>1
+dots "" $?
+
 dots "Install Apache"
 Install_Apache >>$LOG 2>1
 dots "" $?
 
-dots "Installing Webmin"
-install_Webmin >>$LOG 2>1
-dots "" $?
-# on port error /etc/init.d/webmin restart
-# editing /etc/webmin/miniserv.conf port 10000 to 10222
-
 dots "Install Php 7"
 Install_php >>$LOG 2>1
+dots "" $?
+
+dots "Install Maria-DB"
+Install_MariaDB >>$LOG 2>1
 dots "" $?
 
 dots "Install Mysql-Server"
@@ -58,6 +60,12 @@ dots "" $?
 dots "Install PhpMyAdmin"
 Install_PhpMyAdmin >>$LOG 2>1
 dots "" $?
+
+dots "Installing Webmin"
+install_Webmin >>$LOG 2>1
+dots "" $?
+# on port error /etc/init.d/webmin restart
+# editing /etc/webmin/miniserv.conf port 10000 to 10222
 
 dots "Install Samba"
 Install_Samba >>$LOG 2>1
