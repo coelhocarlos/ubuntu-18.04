@@ -45,7 +45,7 @@ Install_Apache() {
 Install_php() {
     echo " -------------- Installing PHP -------------- " 
     cd $DOWNDIR
-    sudo aapt-get -y install php7.2 libapache2-mod-php7.2 || local ERROR=1
+    sudo apt-get -y install php7.2 libapache2-mod-php7.2 || local ERROR=1
     sudo apt-get install php7.2-mysql php7.2-curl php7.2-json php7.2-cgi php7.2-xsl || local ERROR=1
     sudo apt-get -y install php7.2-mysql php7.2-curl php7.2-gd php7.2-intl php-pear php-imagick php7.2-imap php-memcache  php7.2-pspell php7.2-recode php7.2-sqlite3 php7.2-tidy php7.2-xmlrpc php7.2-xsl php7.2-mbstring php-gettext || local ERROR=1
     sudo systemctl restart apache2 || local ERROR=1
