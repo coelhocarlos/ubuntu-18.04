@@ -107,95 +107,21 @@ Install_Firewall() {
     echo " -------------- Adding Firewall Rules -------------- "
     
     cd $DOWNDIR
-    
+    sudo apt install ufw
+    sudo ufw enable || local ERROR=1
+    sudo ufw allow 22 || local ERROR=1
+    sudo ufw allow 80 || local ERROR=1
+    sudo ufw allow 443 || local ERROR=1
+    sudo ufw allow 11000 || local ERROR=1
+    sudo ufw allow 10000 || local ERROR=1
+    sudo ufw allow 8443 || local ERROR=1
+    sudo ufw allow 8096 || local ERROR=1
+    sudo ufw allow 8080 || local ERROR=1
+    sudo ufw allow samba || local ERROR=1
+    sudo ufw allow ftp || local ERROR=1
+    sudo ufw allow 2121 || local ERROR=1
     #-----Allow Established and Related Incoming Connections
-sudo iptables -A INPUT -i lo -j ACCEPT
-sudo iptables -A OUTPUT -o lo -j ACCEPT
-sudo iptables -A INPUT -i ens130 -j ACCEPT
-sudo iptables -A OUTPUT -o ens130 -j ACCEPT
-#-----Allow Established Outgoing Connections
-sudo iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-#-----Internal to External
-sudo iptables -A OUTPUT -m conntrack --ctstate ESTABLISHED -j ACCEPT 
-#-----Drop Invalid Packets
-#sudo iptables -A FORWARD -i eth1 -o eth0 -j ACCEPT
-#----Block an IP Address
-#sudo iptables -A INPUT -m conntrack --ctstate INVALID -j DROP
-#----Block a invalid Packets
-#sudo iptables -A INPUT -s 15.15.15.51 -j DROP
-#----Reject Network Ip
-#sudo iptables -A INPUT -s 15.15.15.51 -j REJECT
-#----Reject Network Interfaces
-#sudo iptables -A INPUT -i eth0 -s 15.15.15.51 -j DROP
-#----Allow All Incoming SSH 
-sudo iptables -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A INPUT -p tcp -s 15.15.15.0/24 --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-#----Allow Outgoing SSH
-sudo iptables -A OUTPUT -p tcp --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A INPUT -p tcp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-#----Allow All Incoming HTTP
-sudo iptables -A INPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-#----Allow All Incoming HTTPS
-sudo iptables -A INPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-#----Allow All Incoming HTTP and HTTPS
-sudo iptables -A INPUT -p tcp -m multiport --dports 80,443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp -m multiport --dports 80,443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-#----Allow All Incoming FTP
-sudo iptables -A INPUT -p tcp --dport 21-m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 21-m conntrack --ctstate ESTABLISHED -j ACCEPT
-#----Allow MySQL from Specific IP Address or Subnet
-sudo iptables -A INPUT -p tcp -s 15.15.15.0/24 --dport 3306 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 3306 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-#----Allow Email  
-sudo iptables -A INPUT -p tcp --dport 25 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 25 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A INPUT -p tcp --dport 143 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 143 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-#---Allow Eamail SMTP 
-sudo iptables -A INPUT -p tcp --dport 143 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 143 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-#---Allow Eamail IMAP
-sudo iptables -A INPUT -p tcp --dport 993 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 993 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-#---Allow All Incoming POP3
-sudo iptables -A INPUT -p tcp --dport 110 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 110 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-#---Allow All Incoming POP3S
-sudo iptables -A INPUT -p tcp --dport 995 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 995 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-#---Allow All TEAMSPEAK3
-sudo iptables -A INPUT -p tcp --dport 10011 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 10011 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-
-sudo iptables -A INPUT -p tcp -m tcp --dport 10000 -j ACCEPT
-sudo iptables -A INPUT -p tcp -m tcp --dport 11100 -j ACCEPT
-
-sudo iptables -A INPUT -p tcp --dport 30033 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 30033 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-sudo iptables -A INPUT -p udp --dport  9987 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p udp --sport  9987 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-#---Allow All MINECRAFT
-sudo iptables -A INPUT -p tcp --dport 25565 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT -p tcp --sport 25565 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-#--Allow All PXE
-sudo iptables -A INPUT -p ALL -i $INET_IFACE -s 192.168.0.0/24 -j ACCEPT
-sudo iptables -A INPUT -p ALL -i $INET_IFACE -d 192.168.0.255 -j ACCEPT
-sudo iptables -A udp_inbound -p UDP -s 0/0 --destination-port 69 -j ACCEPT
-#--Allow All QUAKE
-sudo iptables -A INPUT -p udp -m udp --dport 27910:27912 -j ACCEPT
-#--Allow All CSTRIKE
-sudo iptables -A INPUT -p udp -m udp --dport 27915:27917 -j ACCEPT
-#----SAVE
-sudo iptables-save > /etc/ iptables.up.rules
-#----RESTORE
-sudo iptables-restore < /etc/ iptables.up.rules
-#---FLUSH
-sudo iptables -F
-#---FINISH sudo iptables
+    
 return $ERROR
 }
 
