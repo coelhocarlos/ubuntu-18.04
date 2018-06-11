@@ -74,7 +74,7 @@ Install_SSL(){
  Install_Mysql() {
     echo " -------------- Installing Mysql -------------- "
     cd $DOWNDIR
-    apt-get -y install mysql-server mysql-client || local ERROR=1
+    apt-get -y install mysql-server|| local ERROR=1
     sudo mysql_secure_installation
     sudo systemctl restart mysql.service || local ERROR=1
     return $ERROR
