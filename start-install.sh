@@ -24,48 +24,10 @@ mkdir -p $DOWNDIR
 export global DESTDIR=""
 export global ARCH=$(arch)
 export global LOG=$DOWNDIR/log
-
 traps >$LOG 2>1
 
 ##################################################################################
-sudo apt-get --assume-yes -y install dialog;
 
-mkdir -p $save;
-
-options_file=$save/options.txt;
-
-#rename File if it exists 
-unlink $options_file;
-
-dialog  --checklist "Select the codecs to install : \nPress The BACKSPACE KEY to select a checkbox ,\n Press The ENTER KEY to start the installation" 25 100 8 \
-"Mysql" "Mysql Admin" on \
-"Apache" "Apache" on \
-"Php" "Php 7.2" on \
-"libmp3lame" "Mp3 Codec" on \
-"libopus"  "Opus Codec" on \
-"libvpx" "VP8 / VP9 Codec" on \
-"libvorbis" "Vorbis Format Codec" on \
-"libtheora" "Theora Format Codec" on \
-2> $options_file;
-
-
-options_array=`cat $options_file`
-#####################################################################################
-#if no option is selected kill script
-if [ ${#options_array} -eq 0 ]; then
-    ###Clean install dir 
-	rm -rf $save;
-	echo "Cleaning Installation Directory ...";
-	echo "  Installation failed, no option selected ... ";
-    exit 1;
-fi;
-
-
-for option in $options_array
-   do
-      func_name=install_${option};
-      ${func_name};
-   done;
 ## Header
 echo -e "\n Ubuntu 18.04 pos Installer Script \n"
 echo -e "\n Log File: $LOG\n"
