@@ -39,9 +39,9 @@ dots "Update Distro"
 apt_update >>$LOG 2>1
 dots "" $?
 
-dots "Mysql-Server"
-Install_Mysql >>$LOG 2>1
-dots "" $?
+#dots "Mysql-Server"
+#Install_Mysql >>$LOG 2>1
+#dots "" $?
 
 dots "Apache"
 Install_Apache >>$LOG 2>1
@@ -51,15 +51,11 @@ dots "Php 7"
 Install_php >>$LOG 2>1
 dots "" $?
 
-dots "Maria DB"
-Install_MariaDB >>$LOG 2>1
-dots "" $?
+#dots "Maria DB"
+#Install_MariaDB >>$LOG 2>1
+#dots "" $?
 
-dots "Mysql-Server"
-Install_Mysql >>$LOG 2>1
-dots "" $?
-
-dots "SL CERT"
+dots "SSL CERT"
 Install_SSL >>$LOG 2>1
 dots "" $?
 
