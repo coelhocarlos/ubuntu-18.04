@@ -220,7 +220,7 @@ Install_pxe_lib(){
                authoritative;
                allow booting;
                allow bootp;" /etc/dhcp/dhcpd.conf
-    sudo echo "# global parameters
+    sudo echo "
          subnet 192.168.0.0 netmask 255.255.255.0
         {
         range 192.168.0.100 192.168.0.254;
