@@ -11,7 +11,7 @@ install_Webmin() {
     sudo add-apt-repository "deb http://download.webmin.com/download/repository sarge contrib" || local ERROR=1
     sudo wget -qO- http://www.webmin.com/jcameron-key.asc | sudo apt-key add || local ERROR=1
     sudo apt update || local ERROR=1
-    sudo apt -y install webmin || local ERROR=1
+    sudo apt install webmin  wget|| local ERROR=1
     echo "------------------------------------------------"
     echo "Webmin install complete. You can now login to https://webmin.linuxconfig.org:10000/"
     echo "as root with your root password, or as any user who can use sudo"
@@ -23,7 +23,7 @@ Install_Apache() {
     echo " -------------- Installing Apache -------------- "
     
     cd $DOWNDIR
-    sudo apt-get -y install apache2 || local ERROR=1
+    sudo apt install apache2 wget|| local ERROR=1
     #sudo ufw app list 
     sudo ufw allow 'Apache' || local ERROR=1
     sudo mkdir -p /var/www/server || local ERROR=1
@@ -45,11 +45,11 @@ Install_Apache() {
 Install_php() {
     echo " -------------- Installing PHP -------------- " 
     cd $DOWNDIR
-    sudo apt-get -y install php7.2 libapache2-mod-php7.2 || local ERROR=1
+    sudo apt install php7.2 libapache2-mod-php7.2 wget|| local ERROR=1
     sudo apt-get install php7.2-mysql php7.2-curl php7.2-json php7.2-cgi php7.2-xsl || local ERROR=1
     sudo apt-get -y install php7.2-mysql php7.2-curl php7.2-gd php7.2-intl php-pear php-imagick php7.2-imap php-memcache  php7.2-pspell php7.2-recode php7.2-sqlite3 php7.2-tidy php7.2-xmlrpc php7.2-xsl php7.2-mbstring php-gettext || local ERROR=1
     sudo systemctl restart apache2 || local ERROR=1
-    sudo apt install php7.0-dev || local ERROR=1
+    sudo apt install php7.0-dev wget|| local ERROR=1
     sudo systemctl restart apache2 || local ERROR=1
     sudo apt-get -y install php7.2-opcache php-apcu || local ERROR=1
     sudo systemctl restart apache2 || local ERROR=1
@@ -71,24 +71,25 @@ Install_SSL(){
     #0 */12 * * * root test -x /usr/bin/certbot -a \! -d /run/systemd/system && perl -e 'sleep int(rand(43200))' && certbot -q renew
 }
 
- Install_Mysql() {
-    echo " -------------- Installing Mysql -------------- "
-    cd $DOWNDIR
-    apt-get -y install mysql-server|| local ERROR=1
-    sudo mysql_secure_installation
-    sudo systemctl restart mysql.service || local ERROR=1
-    return $ERROR
-}
+ #Install_Mysql() {
+   # echo " -------------- Installing Mysql -------------- "
+    #cd $DOWNDIR
+    #apt install mysql-server wget || local ERROR=1
+    #apt install mysql-client wget || local ERROR=1
+    #sudo mysql_secure_installation
+    #sudo systemctl restart mysql.service || local ERROR=1
+    #return $ERROR
+#}
 Install_mariaDB(){
     echo " -------------- Installing Maria Db -------------- "
     cd $DOWNDIR
-    apt-get -y install mariadb-server mariadb-client
-    mysql_secure_installation
+    sudo apt install mariadb-server-10.0 mariadb-client-10.0 wget
+    #mysql_secure_installation
 }
 Install_PhpMyAdmin() {
     echo " -------------- Installing PHP Myadmin -------------- "
     cd $DOWNDIR
-    sudo apt-get install phpmyadmin php-gettext
+    sudo apt install phpmyadmin php-gettext wget
     return $ERROR
 }
 
@@ -97,7 +98,7 @@ install_samba() {
     
     cd $DOWNDIR
     
-    sudo tasksel install samba-server  || local ERROR=1
+    sudo apt install samba wget || local ERROR=1
     sudo cp /etc/samba/smb.conf /etc/samba/smb.conf_backup  || local ERROR=1
     sudo bash -c 'grep -v -E "^#|^;" /etc/samba/smb.conf_backup | grep . > /etc/samba/smb.conf'  || local ERROR=1
     return $?
