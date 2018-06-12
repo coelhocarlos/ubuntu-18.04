@@ -210,7 +210,7 @@ Install_Impressora(){
 Install_pxe_lib(){
     cd $DOWNDIR
     sudo apt-get install tftpd-hpa || local ERROR=1
-    sudo echo "TFTP_DIRECTORY="/media/hd2000/wds_share" /etc/default/tftpd-hpa
+    sudo echo "TFTP_DIRECTORY= /media/hd2000/wds_share" /etc/default/tftpd-hpa
     sudo echo "RUN_DAEMON="no" /etc/default/tftpd-hpa
     sudo echo "OPTIONS="-l -s /media/hd2000/wds_share" /etc/default/tftpd-hpa
     sudo apt=get install isc-dhcp-server || local ERROR=1
@@ -257,4 +257,6 @@ Install_glances(){
   cd $DOWNDIR
   sudo apt install glances wget
   return $ERROR
+}
+
 }
