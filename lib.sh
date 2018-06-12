@@ -216,10 +216,10 @@ Install_pxe_lib(){
     sudo apt=get install isc-dhcp-server || local ERROR=1
     sudo echo "option domain-name "coreserver.duckdns.org";" /etc/dhcp/dhcpd.conf
     sudo echo "option domain-name-servers ns1.coreserver.duckdns.org, ns2.coreser.duckdns.org;" /etc/dhcp/dhcpd.conf
-    sudo echo "ddns-update-style interim;
-               authoritative;
-               allow booting;
-               allow bootp;" /etc/dhcp/dhcpd.conf
+    sudo echo " ddns-update-style interim;
+                authoritative;
+                allow booting;
+                allow bootp; " /etc/dhcp/dhcpd.conf
     sudo echo "
          subnet 192.168.0.0 netmask 255.255.255.0
         {
@@ -242,7 +242,7 @@ Install_mega(){
     sudo apt install megatools wget || local ERROR=1
     sudo touch ~/.megarc
     echo "[Login]" >> ~/.megarc
-    echo "Username = carloscoelho_@live.com" >> ~/.megarc
+    echo "Username = carloscoelho_@live.com " >> ~/.megarc
     echo "Password = " >> ~/.megarc
     return $ERROR
 }
