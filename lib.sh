@@ -210,7 +210,29 @@ Install_Impressora(){
 Install_pxe_lib(){
     cd $DOWNDIR
     sudo apt-get install tftpd-hpa || local ERROR=1
+    sudo echo "TFTP_DIRECTORY="/media/hd2000/wds_share" /etc/default/tftpd-hpa
+    sudo echo "RUN_DAEMON="no" /etc/default/tftpd-hpa
+    sudo echo "OPTIONS="-l -s /media/hd2000/wds_share" /etc/default/tftpd-hpa
     sudo apt=get install isc-dhcp-server || local ERROR=1
+    sudo echo "option domain-name "coreserver.duckdns.org";" /etc/dhcp/dhcpd.conf
+    sudo echo "option domain-name-servers ns1.coreserver.duckdns.org, ns2.coreser.duckdns.org;" /etc/dhcp/dhcpd.conf
+    sudo echo "ddns-update-style interim;
+               authoritative;
+               allow booting;
+               allow bootp;" /etc/dhcp/dhcpd.conf
+    sudo echo "# global parameters
+         subnet 192.168.0.0 netmask 255.255.255.0
+        {
+        range 192.168.0.100 192.168.0.254;
+        filename "pxelinux.0";
+        default-lease-time 86400;
+        max-lease-time 604800;
+        option subnet-mask 255.255.255.0;
+        option broadcast-address 192.168.0.255;
+        option domain-name-servers 192.168.0.1;
+        option routers 192.168.0.1;
+        }
+     " /etc/dhcp/dhcpd.conf
     sudo service isc-dhcp-server restart || local ERROR=1
     sudo /etc/init.d/tftpd-hpa restart || local ERROR=1
     return $ERROR
