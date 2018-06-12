@@ -71,15 +71,15 @@ Install_php() {
     #0 */12 * * * root test -x /usr/bin/certbot -a \! -d /run/systemd/system && perl -e 'sleep int(rand(43200))' && certbot -q renew
 #}
 
- #Install_Mysql() {
-   # echo " -------------- Installing Mysql -------------- "
-    #cd $DOWNDIR
-    #apt install mysql-server wget || local ERROR=1
-    #apt install mysql-client wget || local ERROR=1
+ Install_Mysql() {
+    echo " -------------- Installing Mysql -------------- "
+    cd $DOWNDIR
+    apt install -y mysql-server wget || local ERROR=1
+    apt install -y mysql-client wget || local ERROR=1
     #sudo mysql_secure_installation
-    #sudo systemctl restart mysql.service || local ERROR=1
-    #return $ERROR
-#}
+    sudo systemctl restart mysql.service || local ERROR=1
+    return $ERROR
+}
 Install_mariaDB(){
     echo " -------------- Installing Maria Db -------------- "
     cd $DOWNDIR
