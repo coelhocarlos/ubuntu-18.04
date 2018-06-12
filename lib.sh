@@ -59,17 +59,17 @@ Install_php() {
     sudo systemctl restart apache2 || local ERROR=1
     return $ERROR
 }
-Install_SSL(){
-    echo " -------------- Installing SSL -------------- " 
-    cd $DOWNDIR
-    sudo apt-get -y install python3-certbot-apache
+#Install_SSL(){
+   # echo " -------------- Installing SSL -------------- " 
+    #cd $DOWNDIR
+   # sudo apt-get -y install python3-certbot-apache
     #nano /etc/apache2/sites-available/000-default.conf
     #ServerName example.com
     #certbot --apache -d example.com
     # Let's encrypt Auto Renewal
     #/etc/cron.d/certbot
     #0 */12 * * * root test -x /usr/bin/certbot -a \! -d /run/systemd/system && perl -e 'sleep int(rand(43200))' && certbot -q renew
-}
+#}
 
  #Install_Mysql() {
    # echo " -------------- Installing Mysql -------------- "
@@ -108,19 +108,17 @@ Install_Firewall() {
     echo " -------------- Adding Firewall Rules -------------- "
     
     cd $DOWNDIR
-    sudo apt install ufw
-    sudo ufw enable || local ERROR=1
-    sudo ufw allow 22 || local ERROR=1
-    sudo ufw allow 80 || local ERROR=1
-    sudo ufw allow 443 || local ERROR=1
-    sudo ufw allow 11000 || local ERROR=1
-    sudo ufw allow 10000 || local ERROR=1
+    sudo ufw allow ssh || local ERROR=1
+    sudo ufw allow http || local ERROR=1
+    sudo ufw allow https || local ERROR=1
+    sudo ufw allow webmin || local ERROR=1
     sudo ufw allow 8443 || local ERROR=1
     sudo ufw allow 8096 || local ERROR=1
     sudo ufw allow 8080 || local ERROR=1
     sudo ufw allow samba || local ERROR=1
     sudo ufw allow ftp || local ERROR=1
     sudo ufw allow 2121 || local ERROR=1
+    sudo ufw enable -y || local ERROR=1
     #-----Allow Established and Related Incoming Connections
     
 return $ERROR
@@ -153,7 +151,7 @@ Install_cron() {
     echo " -------------- Adding  Cron Scripts -------------- "
     cd $DOWNDIR
      sudo mkdir ~/.scripts || local ERROR=1
-     sudo cd ~/.scripts || local ERROR=1
+     cd ~/.scripts || local ERROR=1
      sudo wget https://raw.githubusercontent.com/coelhocarlos/meganz/master/megasend.sh || local ERROR=1
      sudo wget https://raw.githubusercontent.com/coelhocarlos/sqldump/master/MysqlDump.sh || local ERROR=1
      sudo wget https://raw.githubusercontent.com/coelhocarlos/DebianScripts/master/duck.sh || local ERROR=1
@@ -167,7 +165,7 @@ Install_utorrent () {
     echo " -------------- Installing Utorrent -------------- "
     cd $DOWNDIR
     
-    sudo apt-get install libssl1.0.0 libssl-dev || local ERROR=1
+    sudo apt install libssl1.0.0 libssl-dev wget || local ERROR=1
     sudo wget http://download-new.utorrent.com/endpoint/utserver/os/linux-x64-ubuntu-13-04/track/beta/ -O utserver.tar.gz || local ERROR=1
     sudo tar -zxvf utserver.tar.gz -C /opt/ || local ERROR=1
     sudo chmod 777 /opt/utorrent-server-alpha-v3_3/ || local ERROR=1
@@ -175,7 +173,7 @@ Install_utorrent () {
     sudo wget https://raw.githubusercontent.com/coelhocarlos/debian9-install/master/utorrent || local ERROR=1
     sudo chmod 755 utorrent || local ERROR=1
     sudo cp utorrent /etc/init.d/  || local ERROR=1
-    sudo cd /etc/init.d/ || local ERROR=1
+    cd /etc/init.d/ || local ERROR=1
     sudo update-rc.d utorrent defaults || local ERROR=1
     sudo service utorrent start || local ERROR=1
     #systemctl status utorrent.service
@@ -194,7 +192,7 @@ Install_Emby() {
 Install_ntfs() {
     echo " -------------- Installing NTFS 3G -------------- "
     cd $DOWNDIR
-    sudo apt-get install ntfs-3g || local ERROR=1
+    sudo apt install ntfs-3g wget|| local ERROR=1
     #mkdir /media/hd160
     sudo mkdir /media/hd2000 || local ERROR=1
     #mount -t ntfs-3g /dev/sdb1 /media/hd160
@@ -218,15 +216,17 @@ Install_pxe_lib(){
 }
 Install_mega(){
     cd $DOWNDIR
-    sudo apt-get install megatools || local ERROR=1
-    sudo apt-get install -f
-    sudo cp ~/.megarc
+    sudo apt install megatools wget || local ERROR=1
+    sudo touch ~/.megarc
+    echo "[Login]" >> ~/.megarc
+    echo "Username = carloscoelho_@live.com" >> ~/.megarc
+    echo "Password = " >> ~/.megarc
     return $ERROR
 }
 
 Install_TestDisc(){
    cd $DOWNDIR
-   sudo apt-get install testdisk   
+   sudo aptinstall testdisk  wget 
    return $ERROR
 }
 
