@@ -59,10 +59,10 @@ Install_php() {
     sudo systemctl restart apache2 || local ERROR=1
     return $ERROR
 }
-#Install_SSL(){
-   # echo " -------------- Installing SSL -------------- " 
-    #cd $DOWNDIR
-   # sudo apt-get -y install python3-certbot-apache
+Install_SSL(){
+    echo " -------------- Installing SSL -------------- " 
+    cd $DOWNDIR
+    sudo apt-get -y install python3-certbot-apache
     #nano /etc/apache2/sites-available/000-default.conf
     #ServerName example.com
     #certbot --apache -d example.com
@@ -80,16 +80,17 @@ Install_php() {
     sudo systemctl restart mysql.service || local ERROR=1
     return $ERROR
 }
-Install_mariaDB(){
-    echo " -------------- Installing Maria Db -------------- "
-    cd $DOWNDIR
-    sudo apt install mariadb-server-10.0 mariadb-client-10.0 wget
+#Install_mariaDB(){
+   # echo " -------------- Installing Maria Db -------------- "
+   # cd $DOWNDIR
+   # sudo apt install -y mariadb-server-10.0 mariadb-client-10.0 wget
     #mysql_secure_installation
-}
+#}
+
 Install_PhpMyAdmin() {
     echo " -------------- Installing PHP Myadmin -------------- "
     cd $DOWNDIR
-    sudo apt install phpmyadmin php-gettext wget
+    sudo apt install -y phpmyadmin php-gettext wget
     return $ERROR
 }
 
@@ -226,12 +227,12 @@ Install_mega(){
 
 Install_TestDisc(){
    cd $DOWNDIR
-   sudo aptinstall testdisk  wget 
+   sudo apt install testdisk  wget
    return $ERROR
 }
 
 Install_glances(){
   cd $DOWNDIR
-  sudo apt-get install glances
+  sudo apt install glances wget
   return $ERROR
 }
